@@ -1,8 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { writeFile, access, stat } from 'fs/promises';
-import { constants } from 'fs';
+import { writeFile, stat } from 'fs/promises';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -27,5 +26,3 @@ export const create = async () => {
   }
   await writeFile(newFilePath, defaultContent, { encoding: 'utf-8' });
 };
-
-create();

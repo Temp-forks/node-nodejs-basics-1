@@ -1,22 +1,60 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { writeFile, access } from 'fs/promises';
-import { constants } from 'fs';
+import { stat, readdir, mkdir, copyFile } from 'fs/promises';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const dirName = 'files';
-const newDirName = `${dirName}_copy`;
-const defaultFileName = 'fresh.txt';
-const defaultContent = 'I am fresh and young';
+const sourceDirName = 'files';
+const copyDirName = `${sourceDirName}_copy`;
 const errorMessage = 'FS operation failed';
 
-const checkExist
+const checkDirectoryExist = async (path) => {
+  let isDirectoryExist = false;
+  try {
+    const statObject = await stat(path);
+    isDirectoryExist = statObject.isDirectory();
+  } catch (error) {
+    isDirectoryExist = false;
+  }
+  return isDirectoryExist;
+};
 
+const copyDirectory = async (sourceDirPath, destinationDirPath) => {
+  try {
+    await mkdir(destinationDirPath);
+    const filesArray = await readdir(sourceDirPath);
+    await Promise.all(
+      filesArray.map(async (fileName) => {
+        const filePath = path.join(sourceDirPath, fileName);
+        const destinationFilePath = path.join(destinationDirPath, fileName);
+        const stats = await stat(filePath);
+        const isDirectory = stats.isDirectory();
+
+        if (isDirectory) {
+          return copyDirectory(filePath, destinationFilePath);
+        } else {
+          return copyFile(filePath, destinationFilePath);
+        }
+      })
+    );
+  } catch (error) {
+    console.log('ERROR: copyDirectory.');
+    throw error;
+  }
+};
 
 export const copy = async () => {
-    // Write your code here 
+  // Write your code here
+  const sourceDirPath = path.resolve(__dirname, sourceDirName);
+  const isSourceDirectory = await checkDirectoryExist(sourceDirPath);
 
+  if (!isSourceDirectory) throw new Error(errorMessage + ' >>> no file dir');
 
+  const copyDirPath = path.resolve(__dirname, copyDirName);
+  const isCopyDirectory = await checkDirectoryExist(copyDirPath);
+
+  if (isCopyDirectory) throw new Error(errorMessage + ' >>> exist file_copy dir');
+
+  await copyDirectory(sourceDirPath, copyDirPath);
 };
