@@ -1,7 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { writeFile, access } from 'fs/promises';
+import { writeFile, access, stat } from 'fs/promises';
 import { constants } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -13,11 +13,19 @@ const errorMessage = 'FS operation failed';
 export const create = async () => {
   // Write your code here
   const newFilePath = path.resolve(__dirname, `./files/${defaultFileName}`);
+
+  let isFileExist = false;
   try {
-    await access(newFilePath, constants.F_OK);
+    const statObject = await stat(newFilePath);
+    isFileExist = await statObject.isFile();
   } catch (error) {
-    await writeFile(newFilePath, defaultContent, { encoding: 'utf-8' });
-    return;
+    isFileExist = false;
   }
-  throw new Error(errorMessage);
+
+  if (isFileExist) {
+    throw new Error(errorMessage);
+  }
+  await writeFile(newFilePath, defaultContent, { encoding: 'utf-8' });
 };
+
+create();
