@@ -1,3 +1,24 @@
+import path from 'path';
+import fsPromises from 'fs/promises';
+import { checkFileExist, getDirName } from './utils.js';
+
+const __dirname = getDirName(import.meta.url);
+
+const oldFileName = 'wrongFilename.txt';
+const newFileName = 'properFilename.md';
+const filesPath = './files';
+const errorMessage = 'FS operation failed';
+
 export const rename = async () => {
-    // Write your code here 
+  const oldFilePath = path.resolve(__dirname, filesPath, oldFileName);
+  const isOldFileExist = await checkFileExist(oldFilePath);
+  console.log('oldFilePath=', oldFilePath, isOldFileExist);
+
+  if (!isOldFileExist) throw new Error(errorMessage + ' >>> no oldName file');
+
+  const newFilePath = path.resolve(__dirname, filesPath, newFileName);
+  const isNewFileExist = await checkFileExist(newFilePath);
+  if (isNewFileExist) throw new Error(errorMessage + ' >>> exist newName file');
+
+  await fsPromises.rename(oldFilePath, newFilePath);
 };

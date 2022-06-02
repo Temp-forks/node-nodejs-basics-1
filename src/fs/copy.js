@@ -1,24 +1,12 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import path from 'path';
 import { stat, readdir, mkdir, copyFile } from 'fs/promises';
+import { checkDirectoryExist, getDirName } from './utils.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = getDirName(import.meta.url);
 
 const sourceDirName = 'files';
 const copyDirName = `${sourceDirName}_copy`;
 const errorMessage = 'FS operation failed';
-
-const checkDirectoryExist = async (path) => {
-  let isDirectoryExist = false;
-  try {
-    const statObject = await stat(path);
-    isDirectoryExist = statObject.isDirectory();
-  } catch (error) {
-    isDirectoryExist = false;
-  }
-  return isDirectoryExist;
-};
 
 const copyDirectory = async (sourceDirPath, destinationDirPath) => {
   try {
@@ -48,13 +36,11 @@ export const copy = async () => {
   // Write your code here
   const sourceDirPath = path.resolve(__dirname, sourceDirName);
   const isSourceDirectory = await checkDirectoryExist(sourceDirPath);
-
-  if (!isSourceDirectory) throw new Error(errorMessage + ' >>> no file dir');
+  if (!isSourceDirectory) throw new Error(errorMessage);
 
   const copyDirPath = path.resolve(__dirname, copyDirName);
   const isCopyDirectory = await checkDirectoryExist(copyDirPath);
-
-  if (isCopyDirectory) throw new Error(errorMessage + ' >>> exist file_copy dir');
+  if (isCopyDirectory) throw new Error(errorMessage);
 
   await copyDirectory(sourceDirPath, copyDirPath);
 };
