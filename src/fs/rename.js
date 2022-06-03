@@ -12,13 +12,12 @@ const errorMessage = 'FS operation failed';
 export const rename = async () => {
   const oldFilePath = path.resolve(__dirname, filesPath, oldFileName);
   const isOldFileExist = await checkFileExist(oldFilePath);
-  console.log('oldFilePath=', oldFilePath, isOldFileExist);
 
-  if (!isOldFileExist) throw new Error(errorMessage + ' >>> no oldName file');
+  if (!isOldFileExist) throw new Error(errorMessage);
 
   const newFilePath = path.resolve(__dirname, filesPath, newFileName);
   const isNewFileExist = await checkFileExist(newFilePath);
-  if (isNewFileExist) throw new Error(errorMessage + ' >>> exist newName file');
+  if (isNewFileExist) throw new Error(errorMessage);
 
   await fsPromises.rename(oldFilePath, newFilePath);
 };
