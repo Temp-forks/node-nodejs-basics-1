@@ -11,3 +11,5 @@ export const read = async () => {
   const readStream = createReadStream(path.resolve(__dirname, filesPath, file));
   readStream.pipe(process.stdout);
 };
+
+read();

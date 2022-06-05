@@ -17,4 +17,4 @@ export const calculateHash = async () => {
   return hash.digest('hex');
 };
 
-// calculateHash().then((hex) => console.log('hex=', hex)); // ! ***
+calculateHash().then((hex) => console.log('hex=', hex));

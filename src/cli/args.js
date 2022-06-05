@@ -15,3 +15,5 @@ export const parseArgs = () => {
   const array = argsArray.map((entry) => `${entry[0].slice(2)} is${entry[1]}`);
   console.log(array.join(', '));
 };
+
+parseArgs();

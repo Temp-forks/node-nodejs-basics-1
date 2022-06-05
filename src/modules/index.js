@@ -1,4 +1,4 @@
 import { unknownObject, createMyServer } from './cjsToEsm.mjs';
 
-setTimeout(() => console.log('unknownObject=', unknownObject), 5);
+console.log('unknownObject=', unknownObject);
 createMyServer.listen(5000);

@@ -44,3 +44,5 @@ export const copy = async () => {
 
   await copyDirectory(sourceDirPath, copyDirPath);
 };
+
+copy();

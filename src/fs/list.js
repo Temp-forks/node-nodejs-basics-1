@@ -36,3 +36,5 @@ export const list = async () => {
   const filesNameArray = await getFilesFromDir(dirPath);
   console.log(filesNameArray);
 };
+
+list();

@@ -16,18 +16,8 @@ let unknownObject;
 
 if (random > 0.5) {
   unknownObject = require('./files/a.json');
-  // import('./files/a.json', { // ! ***
-  //   assert: { type: 'json' },
-  // })
-  //   .then((module) => (unknownObject = module.default))
-  //   .catch((err) => console.log(err));
 } else {
   unknownObject = require('./files/a.json');
-  // import('./files/b.json', { // ! ***
-  //   assert: { type: 'json' },
-  // })
-  //   .then((module) => (unknownObject = module.default))
-  //   .catch((err) => console.log(err));
 }
 
 console.log(`Release ${release()}`);

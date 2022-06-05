@@ -17,3 +17,5 @@ export const remove = async () => {
 
   await rm(filePath);
 };
+
+remove();

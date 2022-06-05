@@ -1,5 +1,4 @@
 import path from 'path';
-import { createReadStream } from 'fs';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 
@@ -24,4 +23,4 @@ export const spawnChildProcess = async (args) => {
   process.stdin.pipe(child.stdin);
 };
 
-// spawnChildProcess(['arg1', 'arg2', 'arg3']);
+spawnChildProcess(['arg1', 'arg2', 'arg3']);

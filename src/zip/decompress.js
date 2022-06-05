@@ -21,3 +21,5 @@ export const decompress = async () => {
     process.exitCode = 1;
   });
 };
+
+decompress();

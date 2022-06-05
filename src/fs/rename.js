@@ -21,3 +21,5 @@ export const rename = async () => {
 
   await fsPromises.rename(oldFilePath, newFilePath);
 };
+
+rename();

@@ -8,3 +8,8 @@ export const parseEnv = () => {
 };
 
 parseEnv();
+
+/*
+  for check: 
+  USER_ID=239482 USER_KEY=foobar RSS_name1=value1 RSS_name2=value2 node src/cli/env.js
+*/
