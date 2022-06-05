@@ -8,8 +8,6 @@ const file = 'worker.js';
 // console.log('INDEX');
 const worker = new Worker(path.resolve(__dirname, file), { workerData: 10 });
 
-// worker.postMessage({ n: 4 });
-
 worker.on('message', (msg) => {
   console.log('Message from worker:', msg);
 });
