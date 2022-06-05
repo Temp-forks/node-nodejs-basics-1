@@ -4,6 +4,9 @@ import { createServer as createServerHttp } from 'http';
 import './files/c.js';
 import { fileURLToPath } from 'url';
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -12,17 +15,19 @@ const random = Math.random();
 let unknownObject;
 
 if (random > 0.5) {
-  import('./files/a.json', {
-    assert: { type: 'json' },
-  })
-    .then((module) => (unknownObject = module.default))
-    .catch((err) => console.log(err));
+  unknownObject = require('./files/a.json');
+  // import('./files/a.json', { // ! ***
+  //   assert: { type: 'json' },
+  // })
+  //   .then((module) => (unknownObject = module.default))
+  //   .catch((err) => console.log(err));
 } else {
-  import('./files/b.json', {
-    assert: { type: 'json' },
-  })
-    .then((module) => (unknownObject = module.default))
-    .catch((err) => console.log(err));
+  unknownObject = require('./files/a.json');
+  // import('./files/b.json', { // ! ***
+  //   assert: { type: 'json' },
+  // })
+  //   .then((module) => (unknownObject = module.default))
+  //   .catch((err) => console.log(err));
 }
 
 console.log(`Release ${release()}`);
